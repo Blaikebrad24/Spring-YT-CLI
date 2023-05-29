@@ -28,7 +28,7 @@ public class YTcommands {
     }
 
     @ShellMethod(key = "recent", value = "List recent videos by max count")
-    public void recent(@ShellOption(defaultValue = "5") Integer max)
+    public void recent(@ShellOption(defaultValue = "10") Integer max)
     {
       List<Video> videos = videoService.findRecent(max);
       TableBuilder tableBuilder = commandService.listToArrayTableModel(videos);
