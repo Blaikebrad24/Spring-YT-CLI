@@ -27,11 +27,18 @@ public class YTcommands {
         this.reportService = reportService;
     }
 
+    /*
+    * - Method: recent
+    * - Purpose: retrieves most recent videos per YT channel id
+    * -
+     */
+
     @ShellMethod(key = "recent", value = "List recent videos by max count")
-    public void recent(@ShellOption(defaultValue = "10") Integer max)
+    public void recent(@ShellOption(defaultValue = "20") Integer max)
     {
       List<Video> videos = videoService.findRecent(max);
       TableBuilder tableBuilder = commandService.listToArrayTableModel(videos);
+      System.out.println("\n");
       System.out.println(tableBuilder.build().render(120));
     }
 
@@ -40,6 +47,7 @@ public class YTcommands {
     {
         List<Video> videos = videoService.findAllByYear(year);
         TableBuilder tableBuilder = commandService.listToArrayTableModel(videos);
+        System.out.println("/n");
         System.out.println(tableBuilder.build().render(120));
     }
 

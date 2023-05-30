@@ -13,6 +13,14 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/*
+* - Class: VideoService
+* -Purpose: Retrieving the videos from YT API
+* - Attributes: Logger,List<ofTypeVideo>, YoutubeConfigProps and YTDataClient instance
+* - Methods: findAll, findRecent, findAllByYear,
+*            loadAllVideos, loadAllVideosByYear
+ */
 @Service
 public class VideoService {
 
@@ -21,7 +29,11 @@ public class VideoService {
     private final YoutubeConfigProps youtubeConfigProps;
     private final YTDataClient client;
 
-
+    /*
+     * Method: (Constructor)
+     * Functionality: Loads all videos from
+     *                client instance by youtubeConfigProps
+     */
     public VideoService(YoutubeConfigProps youtubeConfigProps, YTDataClient client) {
         this.youtubeConfigProps = youtubeConfigProps;
         this.client = client;
@@ -45,6 +57,10 @@ public class VideoService {
         return videos.stream().filter(v -> v.snippet().publishedAt().getYear() == year).toList();
     }
 
+    /**
+     * The YouTube search API only returns 50 results per page. This method recursively calls itself until there are no more pages.
+     * @param pageToken The page token to use for the next page.
+     */
     public void loadAllVideos(String pageToken)
     {
         SearchListResponse search = client.search(youtubeConfigProps.channelId(), youtubeConfigProps.key(), 50, pageToken);
